@@ -5,6 +5,9 @@ import { TASKS_KEY, TaskState, type Task } from "../models/task";
 export default function useTask() {
     const [tasks, setTasks] = useLocalStorage<Task[]>(TASKS_KEY, []);
 
+    const tasksCount = tasks.filter((task) => task.state === TaskState.Created).length;
+    const concludedTasksCount = tasks.filter((task) => task.concluded).length;
+
     function prepareTask() {
         setTasks([...tasks, {
             id: Math.random().toString(36).substring(2, 9),
@@ -25,7 +28,7 @@ export default function useTask() {
         );
     }
 
-    function deleteTask(id: string ){
+    function deleteTask(id: string) {
         setTasks(tasks.filter((task) => task.id !== id))
     }
 
@@ -34,6 +37,8 @@ export default function useTask() {
         prepareTask,
         updateTask,
         updateTaskStatus,
-        deleteTask
+        deleteTask,
+        tasksCount,
+        concludedTasksCount
     }
 }
