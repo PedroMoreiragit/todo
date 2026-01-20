@@ -1,21 +1,21 @@
 import Badge from "../components/badge";
 import Text from "../components/text";
-import useTask from "../hooks/use-task";
+import useTask from "../hooks/use-tasks";
 
 
 export default function TasksSummary() {
 
-    const {tasksCount, concludedTasksCount} = useTask();
+    const {tasksCount, concludedTasksCount, isLoadingTasks} = useTask();
 
     return <>
         <div className="flex items-center gap-2">
             <Text variant="body-sm-bold" className="!text-gray-300">Tarefas criadas</Text>
-            <Badge variant="secondary">{tasksCount}</Badge>
+            <Badge variant="secondary" loading={isLoadingTasks}>{tasksCount}</Badge>
         </div>
 
         <div className="flex items-center gap-2">
             <Text variant="body-sm-bold" className="!text-gray-300">Concluídas</Text>
-            <Badge variant="primary">{concludedTasksCount} de {tasksCount}</Badge>
+            <Badge variant="primary" loading={isLoadingTasks}>{concludedTasksCount} de {tasksCount}</Badge>
         </div>
     </>
 }
